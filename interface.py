@@ -53,9 +53,9 @@ class MyApp(Widget):
                 os.mkdir(save_path_im, )
             if len(os.listdir(save_path)) == 0:
                 RRF.read_raw_intensity_frames(path)
-            for name in os.listdir(save_path):
-                frame_display, preprocessed_frame = marker_detection.preprocess(cv2.imread(os.path.join(save_path, name)))
-                cv2.imwrite(os.path.join(save_path_im, name), preprocessed_frame)
+                for name in os.listdir(save_path):
+                    frame_display, preprocessed_frame = marker_detection.preprocess(cv2.imread(os.path.join(save_path, name)))
+                    cv2.imwrite(os.path.join(save_path_im, name), preprocessed_frame)
             # Trouve le nombre d'images, définit le max du slider et le texte /tot
             global images_total
             images_total = len(os.listdir(save_path))
@@ -201,7 +201,7 @@ class MyApp(Widget):
                     image = cv2.imread(os.path.join(save_path_im, os.listdir(save_path_im)[i]))
                     keypoints = marker_detection.detect_markers(image)
                     for n in range(len(keypoints)):
-                        coordo_xy = [float(keypoints[n][0]), float(keypoints[n][1])]
+                        coordo_xy = [keypoints[n].pt[0], keypoints[n].pt[1]]
                         coordinates.append(coordo_xy)
                     dict_coordo[f'image{i+1}'] = coordinates
                 self.labelize()
